@@ -1,0 +1,36 @@
+dist: trusty
+sudo: false
+matrix:
+  include:
+    - language: go
+      go:
+        - 1.12.x
+      env:
+        - GOMAXPROCS=9
+      os:
+        - linux
+      install:
+        - go get github.com/axw/gocov/gocov
+        - go install github.com/axw/gocov/gocov
+        - go get -u github.com/mchirico/date/parse
+        - go get gopkg.in/yaml.v2
+        - go get golang.org/x/crypto/ssh
+        - go get github.com/spf13/cobra
+        - go get github.com/mitchellh/go-homedir
+        - go get github.com/spf13/viper
+      before_install:
+        #- openssl aes-256-cbc -k "$super_secret_password" -in fixtures/data.enc -out fixtures/data -d
+        #- for i in $(ls fixtures/fixtures_*.enc); do openssl aes-256-cbc -k "$super_secret_password" -in ${i} -out ${i%%.*} -d; done
+        - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64
+          > ./cc-test-reporter
+        - chmod +x ./cc-test-reporter
+        - "./cc-test-reporter before-build"
+      script:
+        - go test -race -v -coverprofile=c.out ./... && echo -e "\n\n\n ✅ SUCCESS \n\n"
+        - gocov test ./... > cc.out
+      after_success:
+        - cp c.out coverage.txt
+        - bash <(curl -s https://codecov.io/bash)
+        - "./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT"
+
+
