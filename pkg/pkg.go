@@ -2,6 +2,7 @@ package pkg
 
 import (
 	"bytes"
+	"fmt"
 	"io/ioutil"
 	"log"
 	"os"
@@ -9,16 +10,22 @@ import (
 	"text/template"
 )
 
+type Repo struct {
+	Reposhort, RepoHttp, Branch, Path string
+}
+
 func WriteString(file string, string string, perm os.FileMode) error {
 	data := []byte(string)
 	err := ioutil.WriteFile(file, data, perm)
 	return err
 }
 
-func Mkdir(path string) {
+func Mkdir(path string) error {
 	if _, err := os.Stat(path); os.IsNotExist(err) {
 		os.MkdirAll(path, os.ModePerm)
+		return nil
 	}
+	return fmt.Errorf("Problem in pkg.Mkdir. Could not create: %s\n", path)
 }
 
 func Rmdir(path string) {
@@ -136,7 +143,11 @@ func GetPWD() (string, error) {
 }
 
 func SliceIndex(limit int, hop int, predicate func(i int) bool) int {
-	for i := 0; i < limit; i++ {
+	if limit == 0 {
+		return -1
+	}
+
+	for i := limit - 1; i >= 0; i-- {
 		if predicate(i) {
 			if i+hop < limit {
 				return i + hop

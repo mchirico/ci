@@ -42,9 +42,7 @@ func TestPipeline(t *testing.T) {
 
 func RepoCreate() interface{} {
 	// Prepare some data to insert into the template.
-	type Repo struct {
-		Reposhort, RepoHttp, Branch, Path string
-	}
+
 	var r = Repo{
 		"testrepo",
 		"https://github/mchirico/date.git",
