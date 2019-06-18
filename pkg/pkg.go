@@ -126,3 +126,31 @@ Output 2: {{printf "%q" . | title}}
 	}
 
 }
+
+func GetPWD() (string, error) {
+	dir, err := os.Getwd()
+	if err != nil {
+		return dir, err
+	}
+	return dir, err
+}
+
+func SliceIndex(limit int, predicate func(i int) bool) int {
+	for i := 0; i < limit; i++ {
+		if predicate(i) {
+			if i+2 < limit {
+				return i + 2
+			}
+		}
+	}
+	return -1
+}
+
+func GetHubDir(dir string) (string, bool) {
+	xs := strings.Split("/Users/mchirico/ci/src/github.com/mchirico/ci/pkg", "/")
+	idx := SliceIndex(len(xs), func(i int) bool { return xs[i] == "github.com" })
+	if idx != -1 {
+		return xs[idx], true
+	}
+	return "", false
+}

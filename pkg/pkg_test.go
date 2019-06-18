@@ -1,6 +1,7 @@
 package pkg
 
 import (
+	"fmt"
 	"github.com/mchirico/ci/templates"
 	"testing"
 )
@@ -100,4 +101,35 @@ func TestUnitSH(t *testing.T) {
 	r := RepoCreate()
 	p := templates.UnitSH()
 	TmpCreate(p, r)
+}
+
+func TestGetPWD(t *testing.T) {
+	d, err := GetPWD()
+	if err != nil {
+		t.FailNow()
+	}
+	fmt.Printf("d: %v\n", d)
+}
+
+func TestGetHubDir(t *testing.T) {
+	s := "/Users/mchirico/ci/src/github.com/mchirico/ci/pkg"
+	if r, found := GetHubDir(s); found {
+		if r != "ci" {
+			t.FailNow()
+		}
+	}
+
+	s2 := "/Users/mchirico/ci/src/mchirico/ci/pkg"
+	if r, found := GetHubDir(s2); !found {
+		if r != "" {
+			t.FailNow()
+		}
+	}
+	s3 := "/Users/mchirico/ci/src/github.com"
+	if r, found := GetHubDir(s3); !found {
+		if r != "" {
+			t.FailNow()
+		}
+	}
+
 }
