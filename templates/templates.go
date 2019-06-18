@@ -108,7 +108,7 @@ image_resource:
   source: {repository: golang}
 
 inputs:
-- name: goscratch
+- name: {{.Reposhort}}
   path: gopath/src/{{.Path}}
 
 caches:
