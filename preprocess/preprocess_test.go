@@ -30,7 +30,7 @@ func ConstructDir() func() {
 
 		err := os.Chdir("../test-fixtures")
 		if err != nil {
-			log.Fatalf("can cd")
+			log.Fatalf("can't cd")
 		}
 
 		pkg.Rmdir("github.com")
