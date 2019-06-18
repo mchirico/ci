@@ -135,20 +135,29 @@ func GetPWD() (string, error) {
 	return dir, err
 }
 
-func SliceIndex(limit int, predicate func(i int) bool) int {
+func SliceIndex(limit int, hop int, predicate func(i int) bool) int {
 	for i := 0; i < limit; i++ {
 		if predicate(i) {
-			if i+2 < limit {
-				return i + 2
+			if i+hop < limit {
+				return i + hop
 			}
 		}
 	}
 	return -1
 }
 
-func GetHubDir(dir string) (string, bool) {
-	xs := strings.Split("/Users/mchirico/ci/src/github.com/mchirico/ci/pkg", "/")
-	idx := SliceIndex(len(xs), func(i int) bool { return xs[i] == "github.com" })
+func GithubRepo(dir string) (string, bool) {
+	xs := strings.Split(dir, "/")
+	idx := SliceIndex(len(xs), 2, func(i int) bool { return xs[i] == "github.com" })
+	if idx != -1 {
+		return xs[idx], true
+	}
+	return "", false
+}
+
+func GithubUser(dir string) (string, bool) {
+	xs := strings.Split(dir, "/")
+	idx := SliceIndex(len(xs), 1, func(i int) bool { return xs[i] == "github.com" })
 	if idx != -1 {
 		return xs[idx], true
 	}

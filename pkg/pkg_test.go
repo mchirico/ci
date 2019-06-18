@@ -111,22 +111,39 @@ func TestGetPWD(t *testing.T) {
 	fmt.Printf("d: %v\n", d)
 }
 
-func TestGetHubDir(t *testing.T) {
+func TestGetRepo(t *testing.T) {
 	s := "/Users/mchirico/ci/src/github.com/mchirico/ci/pkg"
-	if r, found := GetHubDir(s); found {
+	if r, found := GithubRepo(s); found {
 		if r != "ci" {
 			t.FailNow()
 		}
 	}
 
 	s2 := "/Users/mchirico/ci/src/mchirico/ci/pkg"
-	if r, found := GetHubDir(s2); !found {
+	if r, found := GithubRepo(s2); !found {
 		if r != "" {
 			t.FailNow()
 		}
 	}
 	s3 := "/Users/mchirico/ci/src/github.com"
-	if r, found := GetHubDir(s3); !found {
+	if r, found := GithubRepo(s3); !found {
+		if r != "" {
+			t.FailNow()
+		}
+	}
+
+}
+
+func TestGetUser(t *testing.T) {
+	s := "/Users/mchirico/ci/src/github.com/spock/ci/pkg"
+	if r, found := GithubUser(s); found {
+		if r != "spock" {
+			t.FailNow()
+		}
+	}
+
+	s3 := "/Users/mchirico/ci/src/github.com"
+	if r, found := GithubUser(s3); !found {
 		if r != "" {
 			t.FailNow()
 		}
