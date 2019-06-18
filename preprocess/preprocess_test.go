@@ -56,14 +56,17 @@ func Test_CheckForGithubRepro(t *testing.T) {
 }
 
 func Test_CheckForGithubUser(t *testing.T) {
+
+	cleanup := ConstructDir()
+	defer cleanup()
+
 	user, err := CheckForGithubUser()
 	if err != nil {
-		fmt.Printf("err: %s\n", err)
+		t.Fatalf("err: %s\n", err)
 	}
-	fmt.Printf("dir: %s\n", user)
-}
 
-func TestFixture(t *testing.T) {
-	data := filepath.Join("test-fixtures", "stuff.data")
-	print(data)
+	if user != "spock" {
+		t.Fatalf("expected user to be spock. God: %s\n", user)
+	}
+
 }
