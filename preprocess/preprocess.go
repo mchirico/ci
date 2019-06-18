@@ -2,6 +2,7 @@ package preprocess
 
 import (
 	"fmt"
+	"github.com/mchirico/ci/control"
 	"github.com/mchirico/ci/pkg"
 )
 
@@ -52,5 +53,17 @@ func BuildDefaultRepoStruct(branch string) (pkg.Repo, error) {
 		path}
 
 	return r, err
+
+}
+
+func BuildDefault(r pkg.Repo) {
+	c := control.CreateCI()
+	c.BuildUnitSH(r)
+	c.BuildSH(r)
+	c.RunCI(r)
+	c.BuildUnitTaskYML(r)
+	c.BuildPipeline(r)
+	c.BuildTaskYML(r)
+	//c.BuildNotes(r)
 
 }

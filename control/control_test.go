@@ -2,17 +2,6 @@ package control
 
 import "testing"
 
-func CreateCI() CI {
-	c := CI{"ci", "unit.sh",
-		"unit-task.yml",
-		"build-golang-pipeline.yml",
-		"build-task.yml",
-		"build.sh",
-		"run_ci.sh",
-		"NOTES.md"}
-	return c
-}
-
 func CreateRepo() interface{} {
 	r := RepoCreate("testrepo",
 		"https://github/mchirico/date.git",

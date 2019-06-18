@@ -97,3 +97,18 @@ func TestBuildDefaultRepoStruct(t *testing.T) {
 	}
 
 }
+
+func Test_BuildDefault(t *testing.T) {
+	//cleanup := ConstructDir()
+	//defer cleanup()
+
+	ConstructDir()
+
+	r, err := BuildDefaultRepoStruct("develop")
+
+	if err != nil {
+		t.Fatalf("")
+	}
+	BuildDefault(r)
+
+}

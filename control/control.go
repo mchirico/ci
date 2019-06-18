@@ -34,6 +34,17 @@ type CI struct {
 	notes       string
 }
 
+func CreateCI() CI {
+	c := CI{"ci", "unit.sh",
+		"unit-task.yml",
+		"build-golang-pipeline.yml",
+		"build-task.yml",
+		"build.sh",
+		"run_ci.sh",
+		"NOTES.md"}
+	return c
+}
+
 func (c CI) BuildPipeline(r interface{}) {
 
 	p := templates.Pipeline()
