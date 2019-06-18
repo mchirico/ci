@@ -10,7 +10,7 @@ import (
 )
 
 func Pipeline() string {
-	s := `
+	const s = `
 resources:
 
 - name: {{.Reposhort}}
@@ -98,6 +98,29 @@ Josie
 		}
 	}
 
+}
+
+func TmpCreate(templateText string, r interface{}) bytes.Buffer {
+
+	var b bytes.Buffer
+
+	funcMap := template.FuncMap{
+		// The name "title" is what the function will be called in the template text.
+		"title": strings.Title,
+	}
+
+	tmpl, err := template.New("titleTest").Funcs(funcMap).Parse(templateText)
+	if err != nil {
+		log.Fatalf("parsing: %s", err)
+	}
+
+	// Run the template to verify the output.
+	err = tmpl.Execute(&b, r)
+	b.WriteTo(os.Stdout)
+	if err != nil {
+		log.Fatalf("execution: %s", err)
+	}
+	return b
 }
 
 func Sample2() {

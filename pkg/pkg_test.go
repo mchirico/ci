@@ -31,3 +31,23 @@ func TestMkdir(t *testing.T) {
 
 	Rmdir(top)
 }
+
+func TestPipeline(t *testing.T) {
+	Pipeline()
+}
+
+func TestTmpCreate(t *testing.T) {
+
+	// Prepare some data to insert into the template.
+	type Repo struct {
+		Reposhort, RepoHttp, Branch string
+	}
+	var r = Repo{
+		"testrepo",
+		"https://github/mchirico/date.git",
+		"master",
+	}
+
+	p := Pipeline()
+	TmpCreate(p, r)
+}
