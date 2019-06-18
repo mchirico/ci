@@ -70,3 +70,30 @@ func Test_CheckForGithubUser(t *testing.T) {
 	}
 
 }
+
+func TestBuildDefaultRepoStruct(t *testing.T) {
+	cleanup := ConstructDir()
+	defer cleanup()
+
+	r, err := BuildDefaultRepoStruct("develop")
+
+	if err != nil {
+		t.Fatalf("")
+	}
+
+	if r.Path != "gopath/src/github.com/spock/buildUniverse" {
+		t.FailNow()
+	}
+	if r.RepoHttp != "https://github/spock/buildUniverse.git" {
+		t.FailNow()
+	}
+
+	if r.Branch != "develop" {
+		t.FailNow()
+	}
+
+	if r.Reposhort != "buildUniverse" {
+		t.FailNow()
+	}
+
+}
