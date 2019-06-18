@@ -1,6 +1,9 @@
 package pkg
 
-import "testing"
+import (
+	"github.com/mchirico/ci/templates"
+	"testing"
+)
 
 func TestPkg(t *testing.T) {
 
@@ -33,21 +36,54 @@ func TestMkdir(t *testing.T) {
 }
 
 func TestPipeline(t *testing.T) {
-	Pipeline()
+	templates.Pipeline()
 }
 
-func TestTmpCreate(t *testing.T) {
-
+func RepoCreate() interface{} {
 	// Prepare some data to insert into the template.
 	type Repo struct {
-		Reposhort, RepoHttp, Branch string
+		Reposhort, RepoHttp, Branch, Path string
 	}
 	var r = Repo{
 		"testrepo",
 		"https://github/mchirico/date.git",
 		"master",
+		"github.com/mchirico/testrepo",
 	}
+	return r
+}
 
-	p := Pipeline()
+func TestTmpCreate(t *testing.T) {
+
+	r := RepoCreate()
+	p := templates.Pipeline()
+	TmpCreate(p, r)
+}
+
+func TestBuildTask(t *testing.T) {
+
+	r := RepoCreate()
+	p := templates.BuildTask()
+	TmpCreate(p, r)
+}
+
+func TestUnitTask(t *testing.T) {
+
+	r := RepoCreate()
+	p := templates.UnitTask()
+	TmpCreate(p, r)
+}
+
+func TestBuildSH(t *testing.T) {
+
+	r := RepoCreate()
+	p := templates.BuildSH()
+	TmpCreate(p, r)
+}
+
+func TestBuildUnit(t *testing.T) {
+
+	r := RepoCreate()
+	p := templates.BuildUnit()
 	TmpCreate(p, r)
 }

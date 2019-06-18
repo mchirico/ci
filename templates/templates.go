@@ -1,0 +1,126 @@
+package templates
+
+func BuildUnit() string {
+	const s = `platform: linux
+
+image_resource:
+  type: registry-image
+  source: {repository: golang}
+
+inputs:
+- name: goscratch
+  path: gopath/src/{{.Path}}
+
+caches:
+- path: depspath/
+- path: gopath/pkg/
+
+run:
+  path: gopath/src/{{.Path}}/ci/unit.sh
+
+`
+	return s
+}
+
+func BuildSH() string {
+	const s = `#!/bin/bash
+
+set -e -u -x
+
+export GOPATH=$PWD/depspath:$PWD/gopath
+export PATH=$PWD/depspath/bin:$PWD/gopath/bin:$PATH
+
+cd gopath/src/{{.Path}}
+
+#cd cmd/cake
+
+echo
+echo "Fetching dependencies..."
+go get -v
+
+echo
+echo "Building..."
+go build -v
+
+echo
+echo "Smoke test..."
+#./cake
+`
+	return s
+}
+
+func UnitTask() string {
+	const s = `platform: linux
+
+image_resource:
+  type: registry-image
+  source: {repository: golang}
+
+inputs:
+- name: goscratch
+  path: gopath/src/{{.Path}}
+
+caches:
+- path: depspath/
+- path: gopath/pkg/
+
+run:
+  path: gopath/src/{{.Path}}/ci/unit.sh
+`
+	return s
+}
+
+func BuildTask() string {
+	const s = `
+platform: linux
+
+image_resource:
+  type: registry-image
+  source: {repository: golang}
+
+inputs:
+- name: {{.Reposhort}}
+  path: gopath/src/{{.Path}}
+
+caches:
+- path: depspath/
+- path: gopath/pkg/
+
+run:
+  path: gopath/src/{{.Path}}/ci/build.sh
+`
+	return s
+}
+
+func Pipeline() string {
+	const s = `
+resources:
+
+- name: {{.Reposhort}}
+  type: git
+  source:
+    uri: {{.RepoHttp}}
+    branch: {{.Branch}}
+
+###############################################################################
+
+jobs:
+
+- name: unit
+  plan:
+  - get: {{.Reposhort}}
+    trigger: true
+  - task: unit
+    file: {{.Reposhort}}/ci/unit-task.yml
+
+- name: build
+  plan:
+  - get: {{.Reposhort}}
+    trigger: true
+    passed: [unit]
+  - task: build
+    file: {{.Reposhort}}/ci/build-task.yml
+`
+
+	return s
+}

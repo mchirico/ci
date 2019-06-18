@@ -9,39 +9,6 @@ import (
 	"text/template"
 )
 
-func Pipeline() string {
-	const s = `
-resources:
-
-- name: {{.Reposhort}}
-  type: git
-  source:
-    uri: {{.RepoHttp}}
-    branch: {{.Branch}}
-
-###############################################################################
-
-jobs:
-
-- name: unit
-  plan:
-  - get: {{.Reposhort}}
-    trigger: true
-  - task: unit
-    file: {{.Reposhort}}/ci/unit-task.yml
-
-- name: build
-  plan:
-  - get: {{.Reposhort}}
-    trigger: true
-    passed: [unit]
-  - task: build
-    file: {{.Reposhort}}/ci/build-task.yml
-`
-
-	return s
-}
-
 func WriteString(file string, string string, perm os.FileMode) error {
 	data := []byte(string)
 	err := ioutil.WriteFile(file, data, perm)
