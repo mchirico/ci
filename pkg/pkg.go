@@ -83,7 +83,7 @@ func TmpCreate(templateText string, r interface{}) bytes.Buffer {
 
 	// Run the template to verify the output.
 	err = tmpl.Execute(&b, r)
-	b.WriteTo(os.Stdout)
+	//b.WriteTo(os.Stdout)
 	if err != nil {
 		log.Fatalf("execution: %s", err)
 	}

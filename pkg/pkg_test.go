@@ -70,7 +70,7 @@ func TestBuildTask(t *testing.T) {
 func TestUnitTask(t *testing.T) {
 
 	r := RepoCreate()
-	p := templates.UnitTask()
+	p := templates.UnitTaskYML()
 	TmpCreate(p, r)
 }
 
@@ -85,5 +85,19 @@ func TestBuildUnit(t *testing.T) {
 
 	r := RepoCreate()
 	p := templates.BuildUnit()
+	TmpCreate(p, r)
+}
+
+func TestRunCI(t *testing.T) {
+
+	r := RepoCreate()
+	p := templates.RunCI()
+	TmpCreate(p, r)
+}
+
+func TestUnitSH(t *testing.T) {
+
+	r := RepoCreate()
+	p := templates.UnitSH()
 	TmpCreate(p, r)
 }
