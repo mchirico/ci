@@ -46,7 +46,7 @@ func BuildDefaultRepoStruct(branch string) (pkg.Repo, error) {
 		return pkg.Repo{}, err
 	}
 
-	http := fmt.Sprintf("https://github/%s/%s.git", user, repo)
+	http := fmt.Sprintf("https://github.com/%s/%s.git", user, repo)
 	path := fmt.Sprintf("gopath/src/github.com/%s/%s", user, repo)
 	r := pkg.Repo{repo, http,
 		branch,

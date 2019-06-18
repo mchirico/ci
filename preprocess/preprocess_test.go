@@ -84,7 +84,7 @@ func TestBuildDefaultRepoStruct(t *testing.T) {
 	if r.Path != "gopath/src/github.com/spock/buildUniverse" {
 		t.FailNow()
 	}
-	if r.RepoHttp != "https://github/spock/buildUniverse.git" {
+	if r.RepoHttp != "https://github.com/spock/buildUniverse.git" {
 		t.FailNow()
 	}
 
