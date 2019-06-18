@@ -99,10 +99,9 @@ func TestBuildDefaultRepoStruct(t *testing.T) {
 }
 
 func Test_BuildDefault(t *testing.T) {
-	//cleanup := ConstructDir()
-	//defer cleanup()
 
-	ConstructDir()
+	cleanup := ConstructDir()
+	defer cleanup()
 
 	r, err := BuildDefaultRepoStruct("develop")
 
