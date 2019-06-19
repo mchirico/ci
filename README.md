@@ -7,7 +7,7 @@
 
 ci is a program for building concourse pipeline files for your go project.  
 
-Here's a complete, simple example. Assume project **date** doesn't have a *ci* directory
+Here's a complete, simple example. Assume project [**github.com/mchirico/date.git**](https://github.com/mchirico/date) doesn't have a *ci* directory
 with the concourse yml files.
 
 ```bash
@@ -23,8 +23,11 @@ Now the directory *ci* has the following files:
 
 ```bash
 $ ls ci
-build-golang-pipeline.yml	build.sh			unit-task.yml
-build-task.yml			run_ci.sh			unit.sh
+build-golang-pipeline.yml	inform-task.yml
+build-task.yml			inform.sh
+build.sh			run_ci.sh
+docker-task.yml			unit-task.yml
+docker.sh			unit.sh
 ```
 
 Now, if you run run_ci.sh, you'll start the following pipeline:
@@ -36,6 +39,6 @@ cd ci
 
 
 
-<a href="https://mchirico.github.io/p/images/ciEx0.png">
-<img src="https://mchirico.github.io/p/images/ciEx0.png" width="650"/>
+<a href="https://mchirico.github.io/p/images/ciEx1.png">
+<img src="https://mchirico.github.io/p/images/ciEx1.png" width="650"/>
 </a>
