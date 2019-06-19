@@ -1,17 +1,23 @@
 package static
 
-import (
-	"fmt"
-	"io/ioutil"
-	"path/filepath"
-)
+import "strings"
+
+func notes() string {
+	s := `## Reference
+
+Run the following command:
+
+<trip>bash
+	./run_ci.sh
+<trip>
+
+}
+
+`
+	return strings.ReplaceAll(s, "<trip>", "```")
+
+}
 
 func Notes() string {
-	file := filepath.Join("../staticFile", "NOTES.md")
-	dat, err := ioutil.ReadFile(file)
-	if err != nil {
-		fmt.Printf("Cannot read file ./NOTES.md")
-	}
-	return string(dat)
-
+	return notes()
 }

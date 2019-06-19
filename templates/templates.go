@@ -44,6 +44,9 @@ echo -e "                           fly -t mce watch --job {{.Reposhort}}-pipeli
 echo -e "                           fly -t mce builds|grep '{{.Reposhort}}-pipeline'"
 echo -e "                           fly -t mce destroy-pipeline -p {{.Reposhort}}-pipeline -n"
 echo -e "                           fly -t mce workers -d "
+echo -e "                            "
+echo -e "                           To login to a running container: "
+echo -e "                           fly -t mce intercept --job {{.Reposhort}}-pipeline/unit "
 echo -e "\n"
 echo -e "\n"
 
