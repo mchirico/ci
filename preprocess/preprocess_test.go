@@ -41,6 +41,8 @@ func ConstructDir() func() {
 
 func Test_CheckForGithubRepro(t *testing.T) {
 
+	defer ConstructDir()()
+
 	cleanup := ConstructDir()
 	defer cleanup()
 
@@ -57,8 +59,7 @@ func Test_CheckForGithubRepro(t *testing.T) {
 
 func Test_CheckForGithubUser(t *testing.T) {
 
-	cleanup := ConstructDir()
-	defer cleanup()
+	defer ConstructDir()()
 
 	user, err := CheckForGithubUser()
 	if err != nil {
@@ -72,8 +73,8 @@ func Test_CheckForGithubUser(t *testing.T) {
 }
 
 func TestBuildDefaultRepoStruct(t *testing.T) {
-	cleanup := ConstructDir()
-	defer cleanup()
+
+	defer ConstructDir()()
 
 	r, err := BuildDefaultRepoStruct("develop")
 
@@ -100,8 +101,7 @@ func TestBuildDefaultRepoStruct(t *testing.T) {
 
 func Test_BuildDefault(t *testing.T) {
 
-	cleanup := ConstructDir()
-	defer cleanup()
+	defer ConstructDir()()
 
 	r, err := BuildDefaultRepoStruct("develop")
 
