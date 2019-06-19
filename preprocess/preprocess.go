@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"github.com/mchirico/ci/control"
 	"github.com/mchirico/ci/pkg"
+	"github.com/mchirico/ci/userMsg"
 )
 
 func CheckForGithubRepro() (string, error) {
@@ -14,7 +15,7 @@ func CheckForGithubRepro() (string, error) {
 	}
 	repo, found := pkg.GithubRepo(pwd)
 	if !found {
-		fmt.Printf("Not found")
+		fmt.Printf("%s", userMsg.NotFound())
 		return "", fmt.Errorf("Not in project space.")
 	}
 	return repo, err
