@@ -30,12 +30,45 @@ docker-task.yml			unit-task.yml
 docker.sh			unit.sh
 ```
 
-Now, if you run run_ci.sh, you'll start the following pipeline:
+### Must git commit files..
+
+Concourse will pull the *.yml* files from the repo, so these
+files must be checked to your repo on github.  
+
+
+
+
+By default, this will pull from the checked in files from the *master* repo. If you
+take a look at the first few lines of *build-golang-pipeline.yml*, you'll see
+*branch: master* listed.  You can change this, if you want to run Concourse
+on a different branch.
+
+```bash
+$ tail build-golang-pipeline.yml
+
+resources:
+
+- name: date
+  type: git
+  source:
+    uri: https://github.com/mchirico/date.git
+    branch: master
+
+
+```
+
+
+### Once checked in
+
+Now, if you run *ci/run_ci.sh*, on your local branch. 
 
 ```bash
 cd ci
 ./run_ci.sh
 ```
+
+You should see the pipeline in Concourse created.
+
 
 
 
