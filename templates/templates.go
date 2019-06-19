@@ -87,7 +87,8 @@ cd gopath/src/{{.Path}}
 
 echo
 echo "Fetching dependencies..."
-go get -v
+go get -v -t ./...
+
 
 echo
 echo "Building..."
