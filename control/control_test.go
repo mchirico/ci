@@ -57,3 +57,17 @@ func TestBuildNotes(t *testing.T) {
 	r := CreateRepo()
 	c.BuildNotes(r)
 }
+
+func TestInformTaskYML(t *testing.T) {
+
+	c := CreateCI()
+	r := CreateRepo()
+	c.BuildInformTaskYML(r)
+}
+
+func TestInformSH(t *testing.T) {
+
+	c := CreateCI()
+	r := CreateRepo()
+	c.InformSH(r)
+}

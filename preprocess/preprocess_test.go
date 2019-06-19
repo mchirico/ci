@@ -99,6 +99,7 @@ func TestBuildDefaultRepoStruct(t *testing.T) {
 
 }
 
+//TODO: You need to check results
 func Test_BuildDefault(t *testing.T) {
 
 	defer ConstructDir()()

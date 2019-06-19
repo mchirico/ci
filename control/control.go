@@ -24,14 +24,18 @@ func RepoCreate(Reposhort, RepoHttp, Branch, Path string) interface{} {
 }
 
 type CI struct {
-	dir         string
-	buildUnitSH string
-	unitTaskYml string
-	pipeline    string
-	buildTask   string
-	buildSH     string
-	runCI       string
-	notes       string
+	dir           string
+	buildUnitSH   string
+	unitTaskYml   string
+	pipeline      string
+	buildTask     string
+	buildSH       string
+	runCI         string
+	notes         string
+	informSH      string
+	informTaskYml string
+	dockerSH      string
+	dockerTaskYml string
 }
 
 func CreateCI() CI {
@@ -41,7 +45,11 @@ func CreateCI() CI {
 		"build-task.yml",
 		"build.sh",
 		"run_ci.sh",
-		"NOTES.md"}
+		"NOTES.md",
+		"inform.sh",
+		"inform-task.yml",
+		"docker.sh",
+		"docker-task.yml"}
 	return c
 }
 
@@ -65,6 +73,32 @@ func (c CI) BuildUnitSH(r interface{}) {
 	pkg.Mkdir(c.dir)
 
 	err := pkg.WriteString(c.dir+"/"+c.buildUnitSH, b.String(), 0755)
+	if err != nil {
+		log.Printf("error: %s\n", err)
+	}
+
+}
+
+func (c CI) InformSH(r interface{}) {
+
+	p := templates.InformSH()
+	b := pkg.TmpCreate(p, r)
+	pkg.Mkdir(c.dir)
+
+	err := pkg.WriteString(c.dir+"/"+c.informSH, b.String(), 0755)
+	if err != nil {
+		log.Printf("error: %s\n", err)
+	}
+
+}
+
+func (c CI) DockerSH(r interface{}) {
+
+	p := templates.DockerSH()
+	b := pkg.TmpCreate(p, r)
+	pkg.Mkdir(c.dir)
+
+	err := pkg.WriteString(c.dir+"/"+c.dockerSH, b.String(), 0755)
 	if err != nil {
 		log.Printf("error: %s\n", err)
 	}
@@ -104,6 +138,32 @@ func (c CI) BuildUnitTaskYML(r interface{}) {
 	pkg.Mkdir(c.dir)
 
 	err := pkg.WriteString(c.dir+"/"+c.unitTaskYml, b.String(), 0644)
+	if err != nil {
+		log.Printf("error: %s\n", err)
+	}
+
+}
+
+func (c CI) BuildInformTaskYML(r interface{}) {
+
+	p := templates.InformTask()
+	b := pkg.TmpCreate(p, r)
+	pkg.Mkdir(c.dir)
+
+	err := pkg.WriteString(c.dir+"/"+c.informTaskYml, b.String(), 0644)
+	if err != nil {
+		log.Printf("error: %s\n", err)
+	}
+
+}
+
+func (c CI) BuildDockerTaskYML(r interface{}) {
+
+	p := templates.DockerTask()
+	b := pkg.TmpCreate(p, r)
+	pkg.Mkdir(c.dir)
+
+	err := pkg.WriteString(c.dir+"/"+c.dockerTaskYml, b.String(), 0644)
 	if err != nil {
 		log.Printf("error: %s\n", err)
 	}

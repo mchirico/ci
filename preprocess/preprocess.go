@@ -64,6 +64,11 @@ func BuildDefault(r pkg.Repo) {
 	c.BuildUnitTaskYML(r)
 	c.BuildPipeline(r)
 	c.BuildTaskYML(r)
+	c.BuildInformTaskYML(r)
+	c.InformSH(r)
+	c.BuildDockerTaskYML(r)
+	c.DockerSH(r)
+
 	// c.BuildNotes(r)
 
 }
