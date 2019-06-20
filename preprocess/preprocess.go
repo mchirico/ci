@@ -7,7 +7,10 @@ import (
 	"github.com/mchirico/ci/userMsg"
 )
 
-func CheckForGithubRepro() (string, error) {
+var _repo string
+var _user string
+
+func checkForGithubRepo() (string, error) {
 
 	pwd, err := pkg.GetPWD()
 	if err != nil {
@@ -18,11 +21,29 @@ func CheckForGithubRepro() (string, error) {
 		fmt.Printf("%s", userMsg.NotFound())
 		return "", fmt.Errorf("Not in project space.")
 	}
+
 	return repo, err
 
 }
 
-func CheckForGithubUser() (string, error) {
+func CheckForGithubRepo() (string, error) {
+
+	if _repo != "" {
+		return _repo, nil
+	}
+
+	repo, err := checkForGithubRepo()
+	if err != nil {
+		return repo, err
+	}
+
+	_repo = repo
+	return repo, err
+
+}
+
+func checkForGithubUser() (string, error) {
+
 	pwd, err := pkg.GetPWD()
 	if err != nil {
 		return "", fmt.Errorf("error: pkg.GetPWD:%s\n", err)
@@ -32,13 +53,30 @@ func CheckForGithubUser() (string, error) {
 		fmt.Printf("Not found")
 		return "", fmt.Errorf("Not in project space.")
 	}
+
+	return user, err
+
+}
+
+func CheckForGithubUser() (string, error) {
+
+	if _user != "" {
+		return _user, nil
+	}
+
+	user, err := checkForGithubUser()
+	if err != nil {
+		return user, err
+	}
+
+	_user = user
 	return user, err
 
 }
 
 func BuildDefaultRepoStruct(branch string) (pkg.Repo, error) {
 
-	repo, err := CheckForGithubRepro()
+	repo, err := CheckForGithubRepo()
 	if err != nil {
 		return pkg.Repo{}, err
 	}
