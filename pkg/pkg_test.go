@@ -53,48 +53,6 @@ func RepoCreate() interface{} {
 	return r
 }
 
-func TestTmpCreate(t *testing.T) {
-
-	r := RepoCreate()
-	p := templates.Pipeline()
-	TmpCreate(p, r)
-}
-
-func TestBuildTask(t *testing.T) {
-
-	r := RepoCreate()
-	p := templates.BuildTask()
-	TmpCreate(p, r)
-}
-
-func TestUnitTask(t *testing.T) {
-
-	r := RepoCreate()
-	p := templates.UnitTaskYML()
-	TmpCreate(p, r)
-}
-
-func TestBuildSH(t *testing.T) {
-
-	r := RepoCreate()
-	p := templates.BuildSH()
-	TmpCreate(p, r)
-}
-
-func TestBuildUnit(t *testing.T) {
-
-	r := RepoCreate()
-	p := templates.BuildUnit()
-	TmpCreate(p, r)
-}
-
-func TestRunCI(t *testing.T) {
-
-	r := RepoCreate()
-	p := templates.RunCI()
-	TmpCreate(p, r)
-}
-
 func TestUnitSH(t *testing.T) {
 
 	r := RepoCreate()
