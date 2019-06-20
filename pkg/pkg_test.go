@@ -3,6 +3,7 @@ package pkg
 import (
 	"fmt"
 	"github.com/mchirico/ci/templates"
+	"strings"
 	"testing"
 )
 
@@ -99,6 +100,41 @@ func TestUnitSH(t *testing.T) {
 	r := RepoCreate()
 	p := templates.UnitSH()
 	TmpCreate(p, r)
+}
+
+func Test_All_Templates(t *testing.T) {
+
+	t.Parallel()
+
+	tests := []struct {
+		name     string
+		r        func() interface{}
+		p        func() string
+		expected string
+	}{
+		{name: "test RepoCreate", r: RepoCreate, p: templates.UnitSH, expected: "Fetching dependencies..."},
+		{name: "test RunCI", r: RepoCreate, p: templates.RunCI, expected: "set-pipeline -p"},
+		{name: "test BuildUnit", r: RepoCreate, p: templates.BuildUnit, expected: "caches:"},
+		{name: "test BuildSH", r: RepoCreate, p: templates.BuildSH, expected: "go get -v -t ./..."},
+		{name: "test BuildSH", r: RepoCreate, p: templates.InformSH, expected: "export GOPATH="},
+		{name: "test DockerSH", r: RepoCreate, p: templates.DockerSH, expected: "export GOPATH"},
+		{name: "test UnitTaskYML", r: RepoCreate, p: templates.UnitTaskYML, expected: "ci/unit.sh"},
+		{name: "test BuildTask", r: RepoCreate, p: templates.BuildTask, expected: "ci/build.sh"},
+		{name: "test InformTask", r: RepoCreate, p: templates.InformTask, expected: "ci/inform.sh"},
+		{name: "test DockerTask", r: RepoCreate, p: templates.DockerTask, expected: "ci/docker.sh"},
+		{name: "test Pipeline", r: RepoCreate, p: templates.Pipeline, expected: "jobs"},
+	}
+
+	for _, tc := range tests {
+		t.Run(tc.name, func(t *testing.T) {
+			b := TmpCreate(tc.p(), tc.r())
+
+			if !strings.Contains(b.String(), tc.expected) {
+				t.FailNow()
+			}
+
+		})
+	}
 }
 
 func TestGetPWD(t *testing.T) {
