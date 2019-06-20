@@ -74,7 +74,7 @@ func Test_All_Templates(t *testing.T) {
 		{name: "test RunCI", r: RepoCreate, p: templates.RunCI, expected: "set-pipeline -p"},
 		{name: "test BuildUnit", r: RepoCreate, p: templates.BuildUnit, expected: "caches:"},
 		{name: "test BuildSH", r: RepoCreate, p: templates.BuildSH, expected: "go get -v -t ./..."},
-		{name: "test BuildSH", r: RepoCreate, p: templates.InformSH, expected: "export GOPATH="},
+		{name: "test InformSH", r: RepoCreate, p: templates.InformSH, expected: "export GOPATH="},
 		{name: "test DockerSH", r: RepoCreate, p: templates.DockerSH, expected: "export GOPATH"},
 		{name: "test UnitTaskYML", r: RepoCreate, p: templates.UnitTaskYML, expected: "ci/unit.sh"},
 		{name: "test BuildTask", r: RepoCreate, p: templates.BuildTask, expected: "ci/build.sh"},
