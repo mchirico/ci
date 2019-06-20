@@ -69,7 +69,6 @@ func BuildDefault(r pkg.Repo) {
 	c.InformSH(r)
 	c.BuildDockerTaskYML(r)
 	c.DockerSH(r)
-
 	c.BuildNotes(r)
 
 }

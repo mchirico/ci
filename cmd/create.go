@@ -34,13 +34,14 @@ var createCmd = &cobra.Command{
 	Long: `The ci directory will NOT be created, if it currently exists.:
 
 `,
-	Run: func(cmd *cobra.Command, args []string) {
+	RunE: func(cmd *cobra.Command, args []string) error {
 		r, err := preprocess.BuildDefaultRepoStruct("master")
 
 		if err != nil {
-			fmt.Errorf("Directory ci exits. Aborting")
+			return fmt.Errorf("preprocess.BuildDefaultRepoStruct failed, Aborting")
 		}
 		preprocess.BuildDefault(r)
+		return nil
 
 	},
 }
