@@ -81,6 +81,7 @@ func Test_All_Templates(t *testing.T) {
 		{name: "test InformTask", r: RepoCreate, p: templates.InformTask, expected: "ci/inform.sh"},
 		{name: "test DockerTask", r: RepoCreate, p: templates.DockerTask, expected: "ci/docker.sh"},
 		{name: "test Pipeline", r: RepoCreate, p: templates.Pipeline, expected: "jobs"},
+		{name: "test Dockerfile", r: RepoCreate, p: templates.Dockerfile, expected: "ENTRYPOINT"},
 	}
 
 	for _, tc := range tests {

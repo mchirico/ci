@@ -108,5 +108,6 @@ func BuildDefault(r pkg.Repo) {
 	c.BuildDockerTaskYML(r)
 	c.DockerSH(r)
 	c.BuildNotes(r)
+	c.BuildDockerDirectory(r)
 
 }

@@ -194,6 +194,7 @@ func TestFilesCreated(t *testing.T) {
 		{name: "test docker-task.yml", c: c.BuildDockerTaskYML, r: r, file: "docker-task.yml"},
 		{name: "test docker.sh", c: c.DockerSH, r: r, file: "docker.sh"},
 		{name: "test NOTES.md", c: c.BuildNotes, r: r, file: "NOTES.md"},
+		{name: "test Dockerfile", c: c.BuildDockerDirectory, r: r, file: "docker/Dockerfile"},
 	}
 	for _, tc := range tests {
 		t.Run(tc.name, func(t *testing.T) {

@@ -21,6 +21,27 @@ go test -v -race ./...
 	return s
 }
 
+func Dockerfile() string {
+	const s = `FROM golang
+
+ADD hello-world /bin/hello-world
+
+ENV NAME=world
+ENTRYPOINT ["/bin/hello-world"]
+
+`
+	return s
+}
+
+func HelloWorld() string {
+	const s = `#!/bin/sh
+
+echo "hello ${NAME:-world}"
+
+`
+	return s
+}
+
 func RunCI() string {
 	const s = `#!/bin/bash
 
@@ -257,6 +278,14 @@ resources:
     uri: {{.RepoHttp}}
     branch: {{.Branch}}
 
+- name: {{.Reposhort}}-docker-image
+  type: docker-image
+  source:
+    email: ((docker-hub-email))
+    username: ((docker-hub-username))
+    password: ((docker-hub-password))
+    repository: ((docker-hub-username))/cde
+
 ###############################################################################
 
 jobs:
@@ -291,6 +320,28 @@ jobs:
     passed: [inform]
   - task: docker
     file: {{.Reposhort}}/ci/docker-task.yml
+
+- name: publish
+  plan:
+  - get: {{.Reposhort}}
+    trigger: true
+    passed: [docker]
+  - put: {{.Reposhort}}-docker-image
+    params:
+      build: {{.Reposhort}}/ci/docker
+  - task: run
+    config:
+      platform: linux
+      image_resource:
+        type: docker-image
+        source:
+          repository: ((docker-hub-username))/{{.Reposhort}}
+      run:
+        path: /bin/hello-world
+        args: []
+      params:
+        NAME: ((docker-hub-username))
+
 
 `
 

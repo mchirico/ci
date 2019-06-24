@@ -59,12 +59,35 @@ func (c CI) BuildPipeline(r interface{}) {
 	b := pkg.TmpCreate(p, r)
 	pkg.Mkdir(c.dir)
 
-	err := pkg.WriteString(c.dir+"/"+c.pipeline, b.String(), 0755)
+	err := pkg.WriteString(c.dir+"/"+c.pipeline, b.String(), 0644)
 	if err != nil {
 		log.Printf("error: %s\n", err)
 	}
 
 }
+
+
+func (c CI) BuildDockerDirectory(r interface{}) {
+
+	p := templates.Dockerfile()
+	b := pkg.TmpCreate(p, r)
+	pkg.Mkdir(c.dir+"/docker")
+
+	err := pkg.WriteString(c.dir+"/docker/Dockerfile", b.String(), 0644)
+	if err != nil {
+		log.Printf("error: %s\n", err)
+	}
+
+	p = templates.HelloWorld()
+	b = pkg.TmpCreate(p, r)
+	err = pkg.WriteString(c.dir+"/docker/hello-world", b.String(), 0755)
+	if err != nil {
+		log.Printf("error: %s\n", err)
+	}
+
+}
+
+
 
 func (c CI) BuildUnitSH(r interface{}) {
 
