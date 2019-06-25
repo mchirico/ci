@@ -1,6 +1,9 @@
 package control
 
-import "testing"
+import (
+	"github.com/mchirico/ci/tstlib"
+	"testing"
+)
 
 func CreateRepo() interface{} {
 	r := RepoCreate("testrepo",
@@ -70,4 +73,18 @@ func TestInformSH(t *testing.T) {
 	c := CreateCI()
 	r := CreateRepo()
 	c.InformSH(r)
+}
+
+func TestCI_BuildDockerDirectory(t *testing.T) {
+
+	defer tstlib.ConstructDir()()
+	c := CreateCI()
+	r := CreateRepo()
+	c.BuildDockerDirectory(r)
+	pwd := tstlib.PWD()
+
+	if !tstlib.FindFile("Docker", pwd) {
+		t.Fatalf("File not found")
+	}
+
 }
