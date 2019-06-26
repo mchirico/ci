@@ -2,6 +2,7 @@ package tstlib
 
 import (
 	"fmt"
+	"io/ioutil"
 	"log"
 	"os"
 	"path/filepath"
@@ -9,6 +10,14 @@ import (
 )
 
 var repo = "github.com/spock/buildUniverse"
+
+func WriteString(file string, string string, perm os.FileMode) {
+	data := []byte(string)
+	err := ioutil.WriteFile(file, data, perm)
+	if err != nil {
+		log.Fatalf("err: %s\n", err)
+	}
+}
 
 func Mkdir(path string) error {
 	if _, err := os.Stat(path); os.IsNotExist(err) {
